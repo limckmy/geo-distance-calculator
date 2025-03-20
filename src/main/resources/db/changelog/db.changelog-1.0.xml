@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1" author="system">
+        <createTable tableName="app_user">
+            <column name="user_id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="email" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="password_hash" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_at" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="is_active" type="BOOLEAN" defaultValue="true"/>
+            <column name="is_verified" type="BOOLEAN" defaultValue="false"/>
+            <column name="version" type="integer">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="system">
+        <createSequence sequenceName="seq_user_id" startValue="1" incrementBy="1"/>
+    </changeSet>
+
+    <changeSet id="3" author="system">
+        <createSequence sequenceName="postcode_seq" startValue="1" incrementBy="50"/>
+    </changeSet>
+
+    <changeSet id="4" author="system">
+        <createTable tableName="postcode">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="postcode" type="VARCHAR(10)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+            <column name="latitude" type="DOUBLE PRECISION">
+            </column>
+            <column name="longitude" type="DOUBLE PRECISION">
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="5" author="system">
+        <comment>Load postcode data from CSV file, skipping invalid records</comment>
+        <loadData
+                file="classpath:db/data/ukpostcodes.csv"
+                tableName="postcode"
+                separator=","
+                quotchar="'"
+                encoding="UTF-8">
+            <column name="id" type="NUMERIC"/>
+            <column name="postcode" type="STRING"/>
+            <column name="latitude" type="NUMERIC"/>
+            <column name="longitude" type="NUMERIC"/>
+        </loadData>
+    </changeSet>
+
+</databaseChangeLog>
