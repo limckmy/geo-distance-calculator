@@ -6,8 +6,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.limckmy.geodistancecalculator.auth.AuthException;
-import org.limckmy.geodistancecalculator.auth.JWTUtil;
 import org.limckmy.geodistancecalculator.config.SecurityConfig;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -18,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -30,12 +29,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private boolean isWhiltelisted(String uri) {
-        for (String path : SecurityConfig.WHITELIST) {
-            if (uri.contains(path)) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(SecurityConfig.WHITELIST)
+                .anyMatch(pattern -> pattern.endsWith("/**") ? uri.startsWith(pattern.replace("/**", "")) : uri.startsWith(pattern));
     }
 
     @Override

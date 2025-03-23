@@ -15,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    public static final String[] WHITELIST = {"/v1/auth/register", "/v1/auth/login", "/openapi/", "/openapi/**"};
+    public static final String[] WHITELIST = {"/v1/auth/register", "/v1/auth/login", "/openapi/**"};
 
     private final JWTAuthenticationFilter jwtAuthenticationFilter;
 

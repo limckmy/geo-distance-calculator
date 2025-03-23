@@ -43,7 +43,7 @@ java -jar target/geo-distance-calculator-1.0-SNAPSHOT.jar
 ```
 
 ### Testing 
-1. Import postman [collection](Geo-Distance.postman_collection.json)
+1. Import postman [collection](postman/Geo-Distance.postman_collection.json)
    1. Register User : `POST /v1/auth/register`
    2. Generate Token : `POST /v1/auth/login`
    3. Calculate Distance : `GET /v1/distance?postcode1=AB10 1XG&postcode2=AB12 5GL`
@@ -67,3 +67,34 @@ See [docker-compose.yml](docker-compose.yml)
 ### Reference
 - [OpenAPI](openapi.json)
 - [Swagger UI](http://localhost:8080/openapi/swagger-ui.html)
+
+
+### JMeter
+```bash
+jmeter -n -t "jmeter\Calculate Distance.jmx" -l  "jmeter\result_file.jtl" -e -o "jmeter\report"
+```
+JMeter [Report](jmeter/report/index.html)  
+![sample_report](jmeter/sample_report.png)
+
+Re-run (disable user registration test [jmx](jmeter/Calculate%20Distance.jmx))
+```xml
+<HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Register user" enabled="false">
+```
+
+
+
+### Postman
+```bash
+npm install -g newman
+```
+
+```bash
+npm install -g newman-reporter-html
+```
+
+
+```bash
+newman run postman\Geo-Distance.postman_collection.json -r html --reporter-html-export postman\report.html
+```
+Newman [Report](postman/report.html)  
+![](postman/sample_report.png)

@@ -10,8 +10,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -70,7 +69,7 @@ public class PostcodeControllerTest {
         when(postcodeService.updatePostcode(postcode, request)).thenReturn(updatedPostcode);
 
         // Perform POST request
-        mockMvc.perform(post("/v1/postcodes")
+        mockMvc.perform(patch("/v1/postcodes")
                         .param("postcode", postcode)
                         .contentType("application/json")
                         .content("{\"latitude\": 12.34, \"longitude\": 56.78}"))

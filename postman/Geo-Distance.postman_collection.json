@@ -13,38 +13,21 @@
 					"name": "Auth",
 					"item": [
 						{
-							"name": "Query User",
-							"request": {
-								"auth": {
-									"type": "bearer",
-									"bearer": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"type": "string"
-										}
-									]
-								},
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:8080/v1/auth/{{username}}",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "8080",
-									"path": [
-										"v1",
-										"auth",
-										"{{username}}"
-									]
-								}
-							},
-							"response": []
-						},
-						{
 							"name": "Register User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"method": "POST",
 								"header": [],
@@ -71,7 +54,8 @@
 									]
 								}
 							},
-							"response": []
+							"response": [],
+							"disabled": true
 						},
 						{
 							"name": "Login",
@@ -81,7 +65,11 @@
 									"script": {
 										"exec": [
 											"var jsonResponse = pm.response.json();\r",
-											"pm.environment.set(\"token\", jsonResponse.accessToken);"
+											"pm.environment.set(\"token\", jsonResponse.accessToken);\r",
+											"\r",
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -132,6 +120,51 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "Query User",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/v1/auth/{{username}}",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"v1",
+										"auth",
+										"{{username}}"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -140,6 +173,20 @@
 					"item": [
 						{
 							"name": "distance",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -184,6 +231,20 @@
 					"item": [
 						{
 							"name": "Query",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -198,7 +259,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "localhost:8080/v1/postcodes?postcode=EC1A 1BB",
+									"raw": "localhost:8080/v1/postcodes?postcode=AB12 5GL",
 									"host": [
 										"localhost"
 									],
@@ -210,12 +271,12 @@
 									"query": [
 										{
 											"key": "postcode",
-											"value": "AB12 5GL",
-											"disabled": true
+											"value": "AB12 5GL"
 										},
 										{
 											"key": "postcode",
-											"value": "EC1A 1BB"
+											"value": "EC1A 1BB",
+											"disabled": true
 										}
 									]
 								}
@@ -224,6 +285,20 @@
 						},
 						{
 							"name": "Update",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function(){\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -235,11 +310,11 @@
 										}
 									]
 								},
-								"method": "POST",
+								"method": "PATCH",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"latitude\": 57.081938,\r\n    \"longitude\": -2.246567\r\n}",
+									"raw": "{\r\n    \"latitude\": 58.081938,\r\n    \"longitude\": -2.246567\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"

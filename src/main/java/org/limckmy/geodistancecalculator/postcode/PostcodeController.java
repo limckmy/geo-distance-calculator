@@ -20,7 +20,7 @@ public class PostcodeController {
         return ResponseEntity.ok(postcodeService.findByPostcode(postcode));
     }
 
-    @PostMapping
+    @PatchMapping
     public ResponseEntity<Postcode> updatePostcode(@RequestParam String postcode, @RequestBody PostcodeUpdateRequest request) {
         return ResponseEntity.ok(postcodeService.updatePostcode(postcode, request));
     }
