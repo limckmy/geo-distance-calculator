@@ -7,11 +7,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import javax.sql.DataSource;
-
 import java.util.Optional;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -22,9 +21,6 @@ public class PostcodeServiceTest {
 
     @Mock
     private PostcodeRepository postcodeRepository;  // Mocking the repository
-
-    @Mock
-    private DataSource dataSource;  // Mocking the data source (optional for now)
 
     private Postcode existingPostcode;
     private PostcodeUpdateRequest updateRequest;
